@@ -1,0 +1,10 @@
+archive: base-mainnet
+target:
+  type: postgres
+contracts:
+  - name: baseid
+    address: "0x1d390AE05533780B789F41BEcD82da83D3D4c4D9"
+    range: { from: 13975838 }
+    abi: "./abi/Baseid.json"
+    events: true
+    functions: true

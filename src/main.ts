@@ -1,0 +1,112 @@
+import { processor } from "./processor";
+import { Database, LocalDest } from "@subsquid/file-store";
+import { Column, Table, Types } from "@subsquid/file-store-csv";
+import { processBlocks } from "./dataProcessor";
+
+const dbOptions = {
+  tables: {
+    TransactionsTable: new Table("transactions.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      hash: Column(Types.String()),
+      to: Column(Types.String()),
+      from: Column(Types.String()),
+      status: Column(Types.Numeric()),
+    }),
+    BlockTable: new Table("block.csv", {
+      id: Column(Types.String()),
+      number: Column(Types.Numeric()),
+      timestamp: Column(Types.DateTime()),
+    }),
+    TransfersTable: new Table("transfers.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      from: Column(Types.String()),
+      to: Column(Types.String()),
+      tokenId: Column(Types.Numeric()),
+    }),
+    RegisterTable: new Table("register.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      owner: Column(Types.String()),
+      tokenId: Column(Types.Numeric()),
+      domainName: Column(Types.String()),
+    }),
+    AssociateNameTable: new Table("associateName.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      owner: Column(Types.String()),
+      name: Column(Types.String()),
+      timestamp: Column(Types.Numeric()),
+    }),
+    ApprovalAllTable: new Table("approvalAll.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      owner: Column(Types.String()),
+      operator: Column(Types.String()),
+      approved: Column(Types.Boolean()),
+    }),
+    ApprovalTable: new Table("approval.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      owner: Column(Types.String()),
+      approved: Column(Types.String()),
+      tokenId: Column(Types.Numeric()),
+    }),
+    MetadataUpdateTable: new Table("metadataUpdate.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      tokenId: Column(Types.Numeric()),
+    }),
+    MetadataBatchTable: new Table("metadataBatchUpdate", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      fromTokenId: Column(Types.Numeric()),
+      toTokenId: Column(Types.Numeric()),
+    }),
+    OwnershipTransferredTable: new Table("ownershipTransfer.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      previousOwner: Column(Types.String()),
+      newOwner: Column(Types.String()),
+    }),
+    InitializedTable: new Table("initialized.csv", {
+      id: Column(Types.String()),
+      blockNumber: Column(Types.Numeric()),
+      blockTimestamp: Column(Types.DateTime()),
+      transactionHash: Column(Types.String()),
+      eventName: Column(Types.String()),
+      version: Column(Types.Numeric()),
+    }),
+  },
+  dest: new LocalDest("./data"),
+  chunkSizeMb: 100,
+  syncIntervalBlocks: 10000,
+};
+
+processor.run(new Database(dbOptions), processBlocks);

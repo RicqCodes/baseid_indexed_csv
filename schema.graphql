@@ -1,0 +1,108 @@
+type Block @entity {
+  id: ID!
+  number: Int! @index
+  timestamp: DateTime! @index
+}
+
+type Transaction @entity {
+  id: ID!
+  blockNumber: Int @index
+  blockTimestamp: DateTime! @index
+  hash: String! @index
+  to: String @index
+  from: String @index
+  status: Int @index
+}
+
+type EventApproval @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  owner: String! @index
+  approved: String! @index
+  tokenId: BigInt! @index
+}
+
+type EventApprovalForAll @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  owner: String! @index
+  operator: String! @index
+  approved: Boolean!
+}
+
+type EventAssociatedNameSet @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  owner: String! @index
+  name: String!
+  timestamp: BigInt!
+}
+
+type EventBatchMetadataUpdate @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  fromTokenId: BigInt!
+  toTokenId: BigInt!
+}
+
+type EventDomainRegistered @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  owner: String! @index
+  tokenId: BigInt!
+  domainName: String!
+}
+
+type EventInitialized @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  version: Int!
+}
+
+type EventMetadataUpdate @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  tokenId: BigInt!
+}
+
+type EventOwnershipTransferred @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  previousOwner: String! @index
+  newOwner: String! @index
+}
+
+type EventTransfer @entity {
+  id: ID!
+  blockNumber: Int! @index
+  blockTimestamp: DateTime! @index
+  transactionHash: String! @index
+  eventName: String! @index
+  from: String! @index
+  to: String! @index
+  tokenId: BigInt! @index
+}
